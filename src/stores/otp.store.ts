@@ -18,8 +18,7 @@ export const useOtpStore = create<OtpStore>()(
     (set, get) => ({
       otps: [],
       add: (toAdd) => set({ otps: [...get().otps, toAdd] }),
-      remove: (removeId) =>
-        set({ otps: get().otps.filter((item) => item.id !== removeId) }),
+      remove: (removeId) => set({ otps: get().otps.filter((item) => item.id !== removeId) }),
     }),
     {
       name: "otps",

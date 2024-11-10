@@ -10,6 +10,7 @@ type Props = {
 export const OtpItem = ({ name, secret }: Props) => {
   const [otp, setOtp] = useState("");
   const [seconds, setSeconds] = useState(0);
+  const [label, setLabel] = useState("");
 
   const otpObj = useMemo(() => {
     return createOtp(secret);
@@ -20,6 +21,10 @@ export const OtpItem = ({ name, secret }: Props) => {
 
     setOtp(otpObj.generateToken());
     setSeconds(otpObj.getRemainingTime());
+    const labels = [];
+    if (otpObj.issuer) labels.push(otpObj.issuer);
+    if (otpObj.label) labels.push(otpObj.label);
+    setLabel(labels.join(" - "));
 
     const interval = setInterval(() => {
       setOtp(otpObj.generateToken());
@@ -32,7 +37,7 @@ export const OtpItem = ({ name, secret }: Props) => {
   }, [otpObj]);
 
   return (
-    <Flex p="1rem">
+    <Flex my="1rem">
       <RingProgress
         size={100}
         sections={[{ value: (seconds / otpObj.period) * 100, color: "blue" }]}
@@ -44,12 +49,13 @@ export const OtpItem = ({ name, secret }: Props) => {
           </Flex>
         }
       />
-      <Box pt="0.5rem" pb="0.5rem">
-        <Text c="blue" fw={700} size="3rem" mb="0.25rem">
-          {otp}
+      <Box pt="0" pb="0.5rem">
+        <Text size="md" fw={600}>
+          {label}
+          {name && label ? ` (${name})` : name}
         </Text>
-        <Text c="dark" size="sm" fw={600}>
-          {name}
+        <Text c="blue" fw={700} size="3rem">
+          {otp}
         </Text>
       </Box>
     </Flex>

@@ -11,20 +11,14 @@ export const App = () => {
   return (
     <MantineProvider>
       <Container size="sm">
-        <Tabs
-          defaultValue="otps"
-          value={tab}
-          onChange={(tab) => setTab(tab || "otps")}
-        >
+        <Tabs defaultValue="otps" value={tab} onChange={(tab) => setTab(tab || "otps")}>
           <Tabs.List>
-            <Tabs.Tab value="otps">OTPs</Tabs.Tab>
+            <Tabs.Tab value="otps">TOTPs</Tabs.Tab>
             <Tabs.Tab value="new">New</Tabs.Tab>
           </Tabs.List>
 
           <Tabs.Panel value="otps">{tab === "otps" && <OtpList />}</Tabs.Panel>
-          <Tabs.Panel value="new">
-            {tab === "new" && <AddOtp onSuccess={() => setTab("otps")} />}
-          </Tabs.Panel>
+          <Tabs.Panel value="new">{tab === "new" && <AddOtp onSuccess={() => setTab("otps")} />}</Tabs.Panel>
         </Tabs>
       </Container>
     </MantineProvider>

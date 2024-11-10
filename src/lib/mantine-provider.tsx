@@ -1,7 +1,4 @@
-import {
-  createTheme,
-  MantineProvider as AMantineProvider,
-} from "@mantine/core";
+import { createTheme, MantineProvider as AMantineProvider } from "@mantine/core";
 import { PropsWithChildren } from "react";
 
 const theme = createTheme({});

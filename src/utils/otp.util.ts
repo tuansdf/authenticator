@@ -1,12 +1,6 @@
 import * as OTPAuth from "otpauth";
 
-export const createOtp = (
-  secret: string,
-): {
-  generateToken: () => string;
-  getRemainingTime: () => number;
-  period: number;
-} => {
+export const createOtp = (secret: string) => {
   let totp: OTPAuth.TOTP;
   try {
     if (secret.startsWith(`otpauth://totp`)) {
@@ -17,6 +11,9 @@ export const createOtp = (
         digits: 6,
         period: 30,
         secret,
+        issuer: "",
+        issuerInLabel: false,
+        label: "",
       });
     }
   } catch {
@@ -25,6 +22,9 @@ export const createOtp = (
       digits: 6,
       period: 30,
       secret,
+      issuer: "",
+      issuerInLabel: false,
+      label: "",
     });
   }
   return {
@@ -33,5 +33,7 @@ export const createOtp = (
       return totp.period - (Math.floor(Date.now() / 1000) % totp.period);
     },
     period: totp.period,
+    issuer: totp.issuer,
+    label: totp.label,
   };
 };
